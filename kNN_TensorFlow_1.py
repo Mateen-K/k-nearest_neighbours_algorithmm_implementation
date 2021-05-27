@@ -187,13 +187,14 @@ def main():
     # ------------------------------------------------------
     # -- Start of script run actions
     # ------------------------------------------------------
-
     print('----------------------------------------------------')
     print('-- Start script run ' + str(time.strftime('%c')))
     print('----------------------------------------------------\n')
     print('-- Python version     : ' + str(sys.version))
     print('-- TensorFlow version : ' + str(tf.__version__))
     print('-- Matplotlib version : ' + str(mpl.__version__))
+    print('Number of arguments:', len(sys.argv), 'arguments.')
+    print('Argument List:', sys.argv)
 
     # ------------------------------------------------------
     # -- Main script run actions
@@ -206,9 +207,24 @@ def main():
     # 4. Convert (x & class_value) values to TensorFlow constants (x_tf & class_value_tf)
     # ------------------------------------------------------
 
-    # only ask for user input if these variables have not already been defined via command line
-    if ( bool(user_input_x) == 0) and (bool(user_input_y) == 0) and (bool(k_value_tf == 0) ):
+    # # only ask for user input if these variables have not already been defined via command line
+    # try:
+    #     user_input_x and user_input_y and k_value_tf
+    # except NameError:
+    #     get_user_input()
+    # else:
+    #     print('Using values defined via command line.')
+
+    if (len(sys.argv) !=4):
         get_user_input()
+    else:
+        global user_input_x 
+        user_input_x = float(sys.argv[1])
+        global user_input_y 
+        user_input_y = float(sys.argv[2])
+        global k_value_tf 
+        k_value_tf = tf.constant(int(sys.argv[3]))
+
 
     # call function to create data points
     (x0, class_value0, x1, class_value1) = create_data_points()
