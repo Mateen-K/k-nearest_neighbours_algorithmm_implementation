@@ -15,6 +15,7 @@ import sys
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+import argparse
 
 # ------------------------------------------------------
 # Global variables
@@ -129,7 +130,7 @@ def predict_class(xt, ct, dt, kt):
     print('-- Predicting the class membership')
 
     neg_one = tf.constant(-1.0, dtype=tf.float64)
-    #calculate manhatten distance
+    #calculate manhattan distance
     distance = tf.reduce_sum(tf.abs(tf.subtract(xt, dt)), 1)
 
     print(neg_one)
@@ -139,6 +140,8 @@ def predict_class(xt, ct, dt, kt):
     # val, val_index = tf.nn.top_k(neg_distance, kt)
     val, val_index = tf.math.top_k(neg_distance, kt)
     cp = tf.gather(ct, val_index)
+
+    # compare passed variables to data points
 
     print('neg_one      -> %s' % str(neg_one))
     print('distance     -> %s' % str(distance))
@@ -203,9 +206,14 @@ def main():
     # 4. Convert (x & class_value) values to TensorFlow constants (x_tf & class_value_tf)
     # ------------------------------------------------------
 
-    get_user_input()
+    # only ask for user input if these variables have not already been defined via command line
+    if ( bool(user_input_x) == 0) and (bool(user_input_y) == 0) and (bool(k_value_tf == 0) ):
+        get_user_input()
 
+    # call function to create data points
     (x0, class_value0, x1, class_value1) = create_data_points()
+
+    # call function to create and compare test point
     (data_point, data_point_tf) = create_test_point_to_classify()
 
     x = np.vstack((x0, x1))
