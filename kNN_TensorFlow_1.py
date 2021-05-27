@@ -20,7 +20,33 @@ import numpy as np
 # Global variables
 # ------------------------------------------------------
 
-k_value_tf = tf.constant(3)
+# k_value_tf = tf.constant(3)
+global user_input_x
+global user_input_y
+global k_value_tf
+
+
+# ------------------------------------------------------
+# Initiaties a terminal prompt for the user to enter x(x0) and y(x1) 
+# to classify and the number of nearest neighbours (kValue)
+# ------------------------------------------------------
+
+def get_user_input():
+    print('This is simple python script which takes user input and classifies data points with the knn algorithm')
+    
+    print('Enter the x value for the data point: ')
+    global user_input_x 
+    user_input_x = float(input())
+    
+    print('Enter the y value for the data point: ')
+    global user_input_y 
+    user_input_y = float(input())
+
+    print('Enter the k value for the number of nearest neighbours: ')
+    global k_value_tf 
+    k_value_tf = tf.constant(int(input()))
+
+    return None
 
 
 # ------------------------------------------------------
@@ -69,7 +95,7 @@ def create_test_point_to_classify():
 
     print('-- Creating a test point to classify')
 
-    data_point = np.array([((np.random.random_sample() * 10) - 5), ((np.random.random_sample() * 10) - 3)])
+    data_point = np.array([user_input_x, user_input_y])
 
     data_point_tf = tf.constant(data_point)
 
@@ -103,6 +129,7 @@ def predict_class(xt, ct, dt, kt):
     print('-- Predicting the class membership')
 
     neg_one = tf.constant(-1.0, dtype=tf.float64)
+    #calculate manhatten distance
     distance = tf.reduce_sum(tf.abs(tf.subtract(xt, dt)), 1)
 
     print(neg_one)
@@ -116,10 +143,13 @@ def predict_class(xt, ct, dt, kt):
     print('neg_one      -> %s' % str(neg_one))
     print('distance     -> %s' % str(distance))
     print('neg_distance -> %s' % str(neg_distance))
+    print('Distance values of the', kt.numpy() , 'nearest neighbours:')
     print('val          -> %s' % str(val))
     print('val_index    -> %s' % str(val_index))
+    # print('Press Enter to proceed to the data point depiction')
+    # input()
     print('cp           -> %s' % str(cp))
-
+    
     return cp
 
 
@@ -172,6 +202,8 @@ def main():
     # 3. Combine all cluster values into combined lists (x & class_value)
     # 4. Convert (x & class_value) values to TensorFlow constants (x_tf & class_value_tf)
     # ------------------------------------------------------
+
+    get_user_input()
 
     (x0, class_value0, x1, class_value1) = create_data_points()
     (data_point, data_point_tf) = create_test_point_to_classify()
