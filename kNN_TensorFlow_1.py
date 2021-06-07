@@ -206,14 +206,6 @@ def main():
     # 4. Convert (x & class_value) values to TensorFlow constants (x_tf & class_value_tf)
     # ------------------------------------------------------
 
-    # # only ask for user input if these variables have not already been defined via command line
-    # try:
-    #     user_input_x and user_input_y and k_value_tf
-    # except NameError:
-    #     get_user_input()
-    # else:
-    #     print('Using values defined via command line.')
-
     if (len(sys.argv) !=4):
         get_user_input()
     else:
