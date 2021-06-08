@@ -21,9 +21,9 @@ import numpy as np
 # ------------------------------------------------------
 
 # k_value_tf = tf.constant(3)
+global k_value_tf
 global user_input_x
 global user_input_y
-global k_value_tf
 
 
 # ------------------------------------------------------
