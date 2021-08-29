@@ -1,2 +1,2 @@
-# python_workshop_grout_project
-Small project for a TensorFlow workshop held by Dr. Ian Grout from University of Limerick.
+# k-nearest_neighbours_algorithmm_implementation
+Implementation of the kNN-algorithm as part of an university assignment.
